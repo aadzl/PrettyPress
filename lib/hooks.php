@@ -44,6 +44,9 @@ if ( $prettypress_config['enabled'] == "enabled" ) {
 	add_action( 'edit_form_after_editor', 'prettypress_edit_hook' );
 	add_action( 'edit_page_form', 'prettypress_edit_hook' );
 
+	// Load the JS appropriately
+	add_action( 'admin_enqueue_scripts', 'prettypress_enqueue_scripts' );
+
 	//The live page hooks
 	add_filter( 'the_content', 'prettypress_thecontent' );
 	add_filter( 'the_title', 'prettypress_thetitle' );
@@ -91,6 +94,42 @@ function prettypress_edit_hook() {
 	require_once PLUGINPATH . '/view/edit.php';
 
 }
+
+/**
+ * Load the PP js in the back end
+ *
+ * @author Richard Tape <@richardtape>
+ * @package PrettyPress
+ * @since 0.4
+ * @param (string) $hook - the hook name of the currently active screen
+ * @return null
+ */
+
+function prettypress_enqueue_scripts( $hook ){
+
+	// Array of screens where we want to load our JS
+	$allowedHooks = array(
+		'post.php',
+		'post-new.php'
+	);
+
+	// Run the hooks through a filter so we can modify this externally
+	$allowedHooks = apply_filters( 'prettypress_allowed_hooks_for_js_load', $allowedHooks, $hook );
+
+	// Check that we still have hooks to show on
+	if( !is_array( $allowedHooks ) || empty( $allowedHooks ) )
+		return;
+
+	if( !in_array( $hook, array_values( $allowedHooks ) ) )
+		return;
+
+	// OK we're on the right screen, let's load these guys. Should perhaps use plugin_dir_url() rather than constant
+	wp_enqueue_script( 'prettypress_js_main', 		PRETTYPRESS_BASE_URL . '/assets/js/prettypress.js' );
+	wp_enqueue_script( 'prettypress_js_hooks', 		PRETTYPRESS_BASE_URL . '/assets/js/prettypress_hooks.js' );
+	wp_enqueue_script( 'prettypress_js_resize', 	PRETTYPRESS_BASE_URL . '/assets/js/prettypress_resize.js' );
+	wp_enqueue_script( 'prettypress_js_bootloader', PRETTYPRESS_BASE_URL . '/assets/js/prettypress_bootloader.js' );
+
+}/* prettypress_enqueue_scripts */
 
 function prettypress_css_hook() {
 

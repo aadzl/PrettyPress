@@ -44,12 +44,12 @@ global $post;
 
 <div class="prettypress_wrapper" id="prettypress_wrapper">
 	<div class="prettypress_resize" id="resize"><div class="border"></div></div>
-	
+
 	<div class="prettypress_nav wp-ui-primary wp-ui-core wp-submenu" id="prettypress_menu">
 		<div class="item item-left" id="prettypress_exit"></div>
 		<div class="item-left">Back to Wordpress</div>
 	</div>
-	
+
 	<div class="prettypress_preview_container" id="prettypress_preview_container">
 		<iframe id="prettypress_iframe" class="prettypress_iframe" src=""></iframe>
 	</div>
@@ -62,8 +62,3 @@ global $post;
 	<input type="hidden" id="prettypress_autoload" value="1" />
 	<?php }	?>
 </div>
-
-<script src="<?php echo PRETTYPRESS_BASE_URL; ?>/assets/js/prettypress.js"></script>
-<script src="<?php echo PRETTYPRESS_BASE_URL; ?>/assets/js/prettypress_hooks.js"></script>
-<script src="<?php echo PRETTYPRESS_BASE_URL; ?>/assets/js/prettypress_resize.js"></script>
-<script src="<?php echo PRETTYPRESS_BASE_URL; ?>/assets/js/prettypress_bootloader.js"></script>
